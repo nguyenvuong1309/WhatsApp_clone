@@ -1,41 +1,24 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-// if (!__DEV__) {
-//   console.log = () => {};
-//   console.error = () => {};
-//   console.warn = () => {};
-// }
-
 import React from 'react';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import NormalTheme from './src/Themes/NormalTheme';
-import {initFirebase} from '@src/Firebase';
-
-
-EStyleSheet.build(NormalTheme);
-
-// if (!__DEV__) {
-//   console.log('This will be stripped in production.');
-//   console.log = () => {};
-//   console.error = () => {};
-//   console.warn = () => {};
-//   console.log('This will be stripped in dev.');
-// }
-
-initFirebase();
+import {View, Text, ViewStyle, TextStyle} from 'react-native';
 
 const App = () => {
   return (
-   <>
-
-   </>
+    <View style={CONTAINER}>
+      <Text style={TXT}>Vuong</Text>
+    </View>
   );
-}
+};
 
+const CONTAINER: ViewStyle = {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#F5FCFF',
+};
+const TXT: TextStyle = {
+  fontSize: 20,
+  textAlign: 'center',
+  margin: 10,
+};
 
 export default App;
