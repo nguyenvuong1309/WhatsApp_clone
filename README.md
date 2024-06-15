@@ -1,5 +1,7 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+ <!-- git push https://nguyenvuong1309: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@github.com/nguyenvuong1309/web3_mobile_app.git -->
+
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
