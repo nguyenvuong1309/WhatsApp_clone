@@ -24,7 +24,7 @@ jobs:
     - name: upload artifact to Firebase App Distribution
       uses: wzieba/Firebase-Distribution-Github-Action@v1
       with:
-        appId: ${{secrets.FIREBASE_APP_ID}}
+        appId: vuong-561c7
         serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
         groups: testers
         file: app/build/outputs/apk/release/app-release-unsigned.apk
