@@ -36,6 +36,13 @@ jobs:
           chmod +x ./gradlew
           cd ..
           
+       - name: Debugging output
+        run: |
+          pwd
+          ls -la
+          cd android
+          ls -la
+
       - name: Execute Gradle command - assembleDebug
         run: |
           cd android
