@@ -36,7 +36,8 @@ jobs:
           java-version: '17'
 
       - name: Make gradlew executable
-        run: chmod +x android/gradlew
+        run: chmod +x ./gradlew
+        working-directory: android
 
       - name: Execute Gradle command - assembleDebug
         run: ./gradlew assembleDebug
