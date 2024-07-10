@@ -31,8 +31,11 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
+        run: | 
+          cd android
+          chmod +x ./gradlew
+          cd ..
+          
       - name: Execute Gradle command - assembleDebug
         run: |
           cd android
