@@ -24,17 +24,21 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Change directory to Android
+        run: cd android
+
       - name: Make gradlew executable
         run: chmod +x ./android/gradlew
 
       - name: Execute Gradle command - assembleDebug
-        run: ./android/gradlew -p android assembleDebug
+        run: ./gradlew assembleDebug
+        working-directory: android
 
       - name: Upload Artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.FIREBASE_APP_ID }}
-          serviceCredentialsFileContent: ${{ secrets.WEB3_MOBILE_APP_FIREBASEAPP_DISTRIBUTION_KEY }}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
           file: android/app/build/outputs/apk/debug/app-debug.apk
           releaseNotes: ${{ inputs.release_notes }}
