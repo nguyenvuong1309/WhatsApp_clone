@@ -14,11 +14,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4
 
       - name: Setup Java JDK
-        uses: actions/setup-java@v3.13.0
-        with: 
+        uses: actions/setup-java@v3
+        with:
           java-version: '17'
           distribution: 'adopt'
 
@@ -26,7 +26,7 @@ jobs:
         run: ./gradlew build
 
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v3
         with:
           name: web3_mobile_app.apk
           path: app/build/outputs/apk/debug/app-debug.apk
