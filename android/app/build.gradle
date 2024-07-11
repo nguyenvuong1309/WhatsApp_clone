@@ -76,7 +76,7 @@ android {
 
     namespace "com.web3_mobile_app"
     defaultConfig {
-        applicationId "com.web3_mobile_app"
+        applicationId "com.vuong1309.web3_mobile_app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
