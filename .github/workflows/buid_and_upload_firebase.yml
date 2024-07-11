@@ -14,13 +14,9 @@ jobs:
     name: Building and distributing app
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          path: android # Specify the correct path if your Android project is in a subdirectory
+      - uses: actions/checkout@v3
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -30,11 +26,9 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x ./android/gradlew
-        working-directory: ./android
 
       - name: Execute Gradle command - assembleDebug
-        run: ./gradlew assembleDebug
-        working-directory: ./android
+        run: ./android/gradlew -p android assembleDebug
 
       - name: Upload Artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
