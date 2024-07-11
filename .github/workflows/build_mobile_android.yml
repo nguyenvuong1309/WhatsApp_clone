@@ -1,4 +1,4 @@
-name: Build Android React-Native App
+name: Build & upload to Firebase App Distribution 
 
 on:
   pull_request:
@@ -7,9 +7,10 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
