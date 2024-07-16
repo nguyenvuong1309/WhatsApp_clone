@@ -1,4 +1,4 @@
-package com.web3_mobile_app
+package com.vuong1309.web3_mobile_app
 
 import android.app.Application
 import com.facebook.react.PackageList
