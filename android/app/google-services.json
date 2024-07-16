@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "856264269677",
+    "project_id": "vuong-561c7",
+    "storage_bucket": "vuong-561c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856264269677:android:83787a0d2373208e680464",
+        "android_client_info": {
+          "package_name": "com.vuong1309.web3_mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj5ru798bLcQRvHkWLHWC5oZuFBLeGjUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
