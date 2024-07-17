@@ -1,17 +1,17 @@
 name: iOS TestFlight Main
 
 on:
-	pull_request:
-  branches:
-    - main
-  push:
+  pull_request:
     branches:
       - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
   push:
     tags:
       - '*'
-    
+
 jobs:
   build-and-deploy:
     name: Build IPA and Send to TestFlight
@@ -21,8 +21,8 @@ jobs:
     steps:
       - name: Log event
         run: |
-          echo "github.event_name: "${{ github.event_name }}
-          echo "github.event.action: "${{ github.event.action }}
+          echo "github.event_name: ${GITHUB_EVENT_NAME}"
+          echo "github.event.action: ${GITHUB_EVENT_ACTION}"
       - name: Select xCode
         run: sudo xcode-select -s /Applications/Xcode_14.2.app
       - name: Create .ssh files
@@ -35,7 +35,13 @@ jobs:
           echo "Host *.github.com\n\tAddKeysToAgent yes\n\tIgnoreUnknown UseKeychain\n\tIdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Debug
+        run: |
+          echo "Debugging information:"
+          echo "MATCH_PASSWORD: $MATCH_PASSWORD"
+          echo "APPSTORE_API_PRIVATE_KEY: $APPSTORE_API_PRIVATE_KEY"
       - name: Fastlane send to Testflight
         env:
           MATCH_PASSWORD: ${{ secrets.FASTLANE_MATCH_PASSWORD }}
+          APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
         run: fastlane flight apikey:"${{ secrets.APPSTORE_API_PRIVATE_KEY }}" event:tag
