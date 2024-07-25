@@ -1,4 +1,4 @@
-import {Text} from '@src/core';
+import {Text} from '@src/core/text';
 import {View, ViewStyle} from 'react-native';
 
 export const Home = () => {
