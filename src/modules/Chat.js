@@ -41,10 +41,15 @@ export default function Chat() {
     theme: {colors},
   } = useContext(GlobalContext);
   const {currentUser} = auth;
+  console.log('🚀 ~ Chat ~ currentUser:', currentUser);
   const route = useRoute();
+  console.log('🚀 ~ Chat ~ route:', route);
   const room = route.params.room;
+  console.log('🚀 ~ Chat ~ room:', room);
   const selectedImage = route.params.image;
+  console.log('🚀 ~ Chat ~ selectedImage:', selectedImage);
   const userB = route.params.user;
+  console.log('🚀 ~ Chat ~ userB:', userB);
 
   const senderUser = currentUser.photoURL
     ? {
@@ -55,9 +60,12 @@ export default function Chat() {
     : {name: currentUser.displayName, _id: currentUser.uid};
 
   const roomId = room ? room.id : randomId;
+  console.log('🚀 ~ Chat ~ roomId:', roomId);
 
   const roomRef = doc(db, 'rooms', roomId);
+  console.log('🚀 ~ Chat ~ roomRef:', roomRef);
   const roomMessagesRef = collection(db, 'rooms', roomId, 'messages');
+  console.log('🚀 ~ Chat ~ roomMessagesRef:', roomMessagesRef);
 
   useEffect(() => {
     (async () => {
@@ -83,7 +91,7 @@ export default function Chat() {
         try {
           await setDoc(roomRef, roomData);
         } catch (error) {
-          console.log(error);
+          console.log('🚀 ~ error:', error);
         }
       }
       const emailHash = `${currentUser.email}:${userB.email}`;
@@ -151,119 +159,141 @@ export default function Chat() {
     }
   }
 
+  console.log('🚀 ~ Chat ~ userB:', userB);
+  console.log('🚀 ~ Chat ~ room:', room);
+  console.log('🚀 ~ Chat ~ currentUser:', currentUser);
+  console.log('🚀 ~ Chat ~ senderUser:', senderUser);
+  console.log('🚀 ~ Chat ~ messages:', messages);
+
   return (
-    <ImageBackground
-      resizeMode="cover"
-      source={require('../../assets/chatbg.png')}
-      style={{flex: 1}}>
-      <GiftedChat
-        onSend={onSend}
-        messages={messages}
-        user={senderUser}
-        renderAvatar={null}
-        renderActions={props => (
-          <Actions
-            {...props}
-            containerStyle={{
-              position: 'absolute',
-              right: 50,
-              bottom: 5,
-              zIndex: 9999,
-            }}
-            onPressActionButton={handlePhotoPicker}
-            icon={() => (
-              <Ionicons name="camera" size={30} color={colors.iconGray} />
+    <>
+      {!(messages && senderUser && currentUser && room && userB) ? (
+        <View>
+          <Text
+            style={{
+              alignSelf: 'center',
+              paddingTop: 400,
+              fontWeight: 'bold',
+              fontSize: 15,
+            }}>
+            Cannot create chat because insufficient information
+          </Text>
+        </View>
+      ) : (
+        <ImageBackground
+          resizeMode="cover"
+          source={require('../../assets/chatbg.png')}
+          style={{flex: 1}}>
+          <GiftedChat
+            onSend={onSend}
+            messages={messages}
+            user={senderUser}
+            renderAvatar={null}
+            renderActions={props => (
+              <Actions
+                {...props}
+                containerStyle={{
+                  position: 'absolute',
+                  right: 50,
+                  bottom: 5,
+                  zIndex: 9999,
+                }}
+                onPressActionButton={handlePhotoPicker}
+                icon={() => (
+                  <Ionicons name="camera" size={30} color={colors.iconGray} />
+                )}
+              />
             )}
-          />
-        )}
-        timeTextStyle={{right: {color: colors.iconGray}}}
-        renderSend={props => {
-          const {text, messageIdGenerator, user, onSend} = props;
-          return (
-            <TouchableOpacity
-              style={{
-                height: 40,
-                width: 40,
-                borderRadius: 40,
-                backgroundColor: colors.primary,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 5,
-              }}
-              onPress={() => {
-                if (text && onSend) {
-                  onSend(
-                    {
-                      text: text.trim(),
-                      user,
-                      _id: messageIdGenerator(),
-                    },
-                    true,
-                  );
-                }
-              }}>
-              <Ionicons name="send" size={20} color={colors.white} />
-            </TouchableOpacity>
-          );
-        }}
-        renderInputToolbar={props => (
-          <InputToolbar
-            {...props}
-            containerStyle={{
-              marginLeft: 10,
-              marginRight: 10,
-              marginBottom: 2,
-              borderRadius: 20,
-              paddingTop: 5,
-            }}
-          />
-        )}
-        renderBubble={props => (
-          <Bubble
-            {...props}
-            textStyle={{right: {color: colors.text}}}
-            wrapperStyle={{
-              left: {
-                backgroundColor: colors.white,
-              },
-              right: {
-                backgroundColor: colors.tertiary,
-              },
-            }}
-          />
-        )}
-        renderMessageImage={props => {
-          return (
-            <View style={{borderRadius: 15, padding: 2}}>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(true);
-                  setSeletedImageView(props.currentMessage.image);
-                }}>
-                <Image
-                  resizeMode="contain"
+            timeTextStyle={{right: {color: colors.iconGray}}}
+            renderSend={props => {
+              const {text, messageIdGenerator, user, onSend} = props;
+              return (
+                <TouchableOpacity
                   style={{
-                    width: 200,
-                    height: 200,
-                    padding: 6,
-                    borderRadius: 15,
-                    resizeMode: 'cover',
+                    height: 40,
+                    width: 40,
+                    borderRadius: 40,
+                    backgroundColor: colors.primary,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: 5,
                   }}
-                  source={{uri: props.currentMessage.image}}
-                />
-                {selectedImageView ? (
-                  <ImageView
-                    imageIndex={0}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                    images={[{uri: selectedImageView}]}
-                  />
-                ) : null}
-              </TouchableOpacity>
-            </View>
-          );
-        }}
-      />
-    </ImageBackground>
+                  onPress={() => {
+                    if (text && onSend) {
+                      onSend(
+                        {
+                          text: text.trim(),
+                          user,
+                          _id: messageIdGenerator(),
+                        },
+                        true,
+                      );
+                    }
+                  }}>
+                  <Ionicons name="send" size={20} color={colors.white} />
+                </TouchableOpacity>
+              );
+            }}
+            renderInputToolbar={props => (
+              <InputToolbar
+                {...props}
+                containerStyle={{
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginBottom: 2,
+                  borderRadius: 20,
+                  paddingTop: 5,
+                }}
+              />
+            )}
+            renderBubble={props => (
+              <Bubble
+                {...props}
+                textStyle={{right: {color: colors.text}}}
+                wrapperStyle={{
+                  left: {
+                    backgroundColor: colors.white,
+                  },
+                  right: {
+                    backgroundColor: colors.tertiary,
+                  },
+                }}
+              />
+            )}
+            renderMessageImage={props => {
+              return (
+                <View style={{borderRadius: 15, padding: 2}}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalVisible(true);
+                      setSeletedImageView(props.currentMessage.image);
+                    }}>
+                    <Image
+                      resizeMode="contain"
+                      style={{
+                        width: 200,
+                        height: 200,
+                        padding: 6,
+                        borderRadius: 15,
+                        resizeMode: 'cover',
+                      }}
+                      source={{uri: props.currentMessage.image}}
+                    />
+                    {selectedImageView ? (
+                      <ImageView
+                        imageIndex={0}
+                        visible={modalVisible}
+                        onRequestClose={() => setModalVisible(false)}
+                        images={[{uri: selectedImageView}]}
+                      />
+                    ) : null}
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+          />
+        </ImageBackground>
+      )}
+    </>
   );
 }

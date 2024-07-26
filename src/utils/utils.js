@@ -21,7 +21,7 @@ export async function uploadImage(uri, path, fName) {
       resolve(xhr.response);
     };
     xhr.onerror = function (e) {
-      console.log(e);
+      console.log('🚀 ~ blob ~ e:', e);
       reject(new TypeError('Network request failed'));
     };
     xhr.responseType = 'blob';

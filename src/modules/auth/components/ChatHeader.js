@@ -1,7 +1,7 @@
 import {useRoute} from '@react-navigation/native';
 import React, {useContext} from 'react';
 import {View, Text} from 'react-native';
-import GlobalContext from '../../../context/Context';
+import GlobalContext from '@src/context/Context';
 import Avatar from './Avatar';
 
 export default function ChatHeader() {
@@ -12,7 +12,7 @@ export default function ChatHeader() {
   return (
     <View style={{flexDirection: 'row'}}>
       <View>
-        <Avatar size={40} user={route.params.user} />
+        <Avatar size={40} user={route?.params?.user} />
       </View>
       <View
         style={{
@@ -21,7 +21,7 @@ export default function ChatHeader() {
           justifyContent: 'center',
         }}>
         <Text style={{color: colors.white, fontSize: 18}}>
-          {route.params.user.contactName || route.params.user.displayName}
+          {route?.params?.user?.contactName || route?.params?.user?.displayName}
         </Text>
       </View>
     </View>

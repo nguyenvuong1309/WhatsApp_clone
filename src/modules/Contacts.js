@@ -12,41 +12,66 @@ export default function Contacts() {
   const route = useRoute();
   const image = route.params && route.params.image;
   return (
-    <FlatList
-      style={{flex: 1, padding: 10}}
-      data={contacts}
-      keyExtractor={(_, i) => i}
-      renderItem={({item}) => <ContactPreview contact={item} image={image} />}
-    />
+    <>
+      {!contacts ? (
+        <View>
+          <Text>Don't have any contact</Text>
+        </View>
+      ) : (
+        <FlatList
+          style={{flex: 1, padding: 10}}
+          data={contacts}
+          keyExtractor={(_, i) => i}
+          renderItem={({item}) => (
+            <ContactPreview contact={item} image={image} />
+          )}
+        />
+      )}
+    </>
   );
 }
 
 function ContactPreview({contact, image}) {
   const {unfilteredRooms, rooms} = useContext(GlobalContext);
+  console.log("🚀 ~ ContactPreview ~ unfilteredRooms:", unfilteredRooms)
   const [user, setUser] = useState(contact);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const q = query(
-      collection(db, 'users'),
-      where('email', '==', contact.email),
-    );
-    const unsubscribe = onSnapshot(q, snapshot => {
-      if (snapshot.docs.length) {
-        const userDoc = snapshot.docs[0].data();
-        setUser(prevUser => ({...prevUser, userDoc}));
-      }
-    });
-    return () => unsubscribe();
+    try {
+      const q = query(
+        collection(db, 'users'),
+        where('email', '==', contact.email),
+      );
+      const unsubscribe = onSnapshot(q, snapshot => {
+        if (snapshot.docs.length) {
+          const userDoc = snapshot.docs[0].data();
+          setUser(prevUser => ({...prevUser, userDoc}));
+        }
+      });
+      return () => unsubscribe();
+    } catch (error) {
+      setError(error);
+      console.log('🚀 ~ useEffect ~ error:', error);
+    }
   }, []);
   return (
-    <ListItem
-      style={{marginTop: 7}}
-      type="contacts"
-      user={user}
-      image={image}
-      room={unfilteredRooms.find(room =>
-        room.participantsArray.includes(contact.email),
+    <>
+      {error ? (
+        <View>
+          <Text>{JSON.stringify(error)}</Text>
+        </View>
+      ) : (
+        <ListItem
+          style={{marginTop: 7}}
+          type="contacts"
+          user={user}
+          image={image}
+          room={unfilteredRooms.find(room =>
+            room.participantsArray.includes(contact.email),
+          )}
+        />
       )}
-    />
+    </>
   );
 }

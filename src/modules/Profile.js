@@ -50,11 +50,14 @@ export default function Profile() {
     if (photoURL) {
       userData.photoURL = photoURL;
     }
-
-    await Promise.all([
-      updateProfile(user, userData),
-      setDoc(doc(db, 'users', user.uid), {...userData, uid: user.uid}),
-    ]);
+    try {
+      await Promise.all([
+        updateProfile(user, userData),
+        setDoc(doc(db, 'users', user.uid), {...userData, uid: user.uid}),
+      ]);
+    } catch (error) {
+      console.log('🚀 ~ handlePress ~ error:', error);
+    }
     navigation.navigate('home');
   }
 

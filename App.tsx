@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Text, LogBox} from 'react-native';
+import {Text, LogBox, View} from 'react-native';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './src/config/FirebaseConfig';
 import {NavigationContainer} from '@react-navigation/native';
@@ -11,7 +11,7 @@ import Context from '@src/context/Context';
 import Profile from '@src/modules/Profile';
 import Chats from '@src/modules/Chats';
 import Photo from '@src/modules/Photo';
-import {Ionicons} from 'react-native-vector-icons';
+// import {Ionicons} from 'react-native-vector-icons';
 import Contacts from '@src/modules/Contacts';
 import Chat from '@src/modules/Chat';
 import ChatHeader from '@src/modules/auth/components/ChatHeader';
@@ -34,7 +34,6 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, user => {
       setLoading(false);
       if (user) {
-        console.log('🚀 ~ unsubscribe ~ user:', user);
         setCurrUser(user);
       }
     });
@@ -97,12 +96,17 @@ function Home() {
       screenOptions={({route}) => {
         return {
           tabBarLabel: () => {
-            if (route.name === 'photo') {
-              return <Ionicons name="camera" size={20} color={colors.white} />;
+            if (route?.name === 'photo') {
+              // return <Ionicons name="camera" size={20} color={colors.white} />;
+              return (
+                <View>
+                  <Text>PHOTO</Text>
+                </View>
+              );
             } else {
               return (
                 <Text style={{color: colors.white}}>
-                  {route.name.toLocaleUpperCase()}
+                  {route?.name?.toLocaleUpperCase()}
                 </Text>
               );
             }

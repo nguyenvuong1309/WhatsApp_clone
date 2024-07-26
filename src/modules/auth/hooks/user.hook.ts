@@ -15,7 +15,9 @@ import Contacts from 'react-native-contacts';
 import {PermissionsAndroid, Platform} from 'react-native';
 
 export default function useContacts() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState<
+    {contactName: string; email: string}[]
+  >([]);
 
   useEffect(() => {
     (async () => {
@@ -32,7 +34,11 @@ export default function useContacts() {
           loadContacts();
         }
       } else {
-        loadContacts();
+        setContacts([
+          {contactName: 'vuong', email: 'vuong@gmail.com'},
+          {contactName: 'thu', email: 'thu@gmail.com'},
+          {contactName: 'anhthu', email: 'anhthu@gmail.com'},
+        ]);
       }
     })();
   }, []);
@@ -55,14 +61,14 @@ export default function useContacts() {
         }
       })
       .catch(e => {
-        console.log(e);
+        console.log('🚀 ~ loadContacts ~ e:', e);
       });
   };
 
   return contacts;
 }
 
-function mapContactToUser(contact) {
+function mapContactToUser(contact: any) {
   return {
     contactName:
       contact.givenName && contact.familyName
@@ -71,3 +77,4 @@ function mapContactToUser(contact) {
     email: contact.emailAddresses[0].email,
   };
 }
+

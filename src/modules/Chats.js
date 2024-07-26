@@ -21,6 +21,7 @@ export default function Chats() {
         id: doc.id,
         userB: doc.data().participants.find(p => p.email !== currentUser.email),
       }));
+      console.log('🚀 ~ parsedChats ~ parsedChats:', parsedChats);
       setUnfilteredRooms(parsedChats);
       setRooms(parsedChats.filter(doc => doc.lastMessage));
     });
@@ -36,18 +37,34 @@ export default function Chats() {
   }
 
   return (
-    <View style={{flex: 1, padding: 5, paddingRight: 10}}>
-      {rooms.map(room => (
-        <ListItem
-          type="chat"
-          description={room.lastMessage.text}
-          key={room.id}
-          room={room}
-          time={room.lastMessage.createdAt}
-          user={getUserB(room.userB, contacts)}
-        />
-      ))}
-      <ContactsFloatingIcon />
-    </View>
+    <>
+      {!rooms ? (
+        <View>
+          <Text
+            style={{
+              alignSelf: 'center',
+              paddingTop: 400,
+              fontWeight: 'bold',
+              fontSize: 15,
+            }}>
+            Cannot create room chat because insufficient information
+          </Text>
+        </View>
+      ) : (
+        <View style={{flex: 1, padding: 5, paddingRight: 10}}>
+          {rooms.map(room => (
+            <ListItem
+              type="chat"
+              description={room.lastMessage.text}
+              key={room.id}
+              room={room}
+              time={room.lastMessage.createdAt}
+              user={getUserB(room.userB, contacts)}
+            />
+          ))}
+          <ContactsFloatingIcon />
+        </View>
+      )}
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import {TouchableOpacity} from 'react-native';
-import {MaterialCommunityIcons} from 'react-native-vector-icons';
+import {TouchableOpacity, Text, View} from 'react-native';
+// import {MaterialCommunityIcons} from 'react-native-vector-icons';
 import GlobalContext from '../../../context/Context';
 import {useNavigation} from '@react-navigation/native';
 export default function ContactsFloatingIcon() {
@@ -8,9 +8,18 @@ export default function ContactsFloatingIcon() {
     theme: {colors},
   } = useContext(GlobalContext);
   const navigation = useNavigation();
+  const navigationToContracts = () => {
+    if (!navigation) {
+      console.log('🚀 ~ navigationToContracts ~ navigation: error');
+      return null;
+    }
+    if (navigation.navigate) {
+      navigation.navigate('contacts');
+    }
+  };
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('contacts')}
+      onPress={navigationToContracts}
       style={{
         position: 'absolute',
         right: 20,
@@ -22,12 +31,13 @@ export default function ContactsFloatingIcon() {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <MaterialCommunityIcons
+      {/* <MaterialCommunityIcons
         name="android-messages"
         size={30}
         color="white"
         style={{transform: [{scaleX: -1}]}}
-      />
+      /> */}
+      {/* <MessageRoundedIcon /> */}
     </TouchableOpacity>
   );
 }
