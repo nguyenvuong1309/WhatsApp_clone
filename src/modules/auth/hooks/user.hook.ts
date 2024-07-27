@@ -13,6 +13,9 @@
 import {useEffect, useState} from 'react';
 import * as Contacts from 'react-native-contacts';
 import {PermissionsAndroid, Platform} from 'react-native';
+import {collection, query, where} from '@firebase/firestore';
+import {db} from '../../../config/FirebaseConfig';
+import {getDocs} from 'firebase/firestore';
 
 export default function useContacts() {
   const [contacts, setContacts] = useState<
@@ -36,6 +39,22 @@ export default function useContacts() {
       } else {
       }
 
+      try {
+        const usersQuery = query(collection(db, 'users'));
+        const snapshot = await getDocs(usersQuery);
+        const users = snapshot.docs.map(
+          doc =>
+            doc.data() as {
+              contactName: string;
+              email: string;
+              photoURL?: string;
+            },
+        );
+        setContacts(users);
+        return;
+      } catch (error) {
+        console.log('🚀 ~ error:', error);
+      }
       setContacts([
         {
           contactName: 'vuong',
