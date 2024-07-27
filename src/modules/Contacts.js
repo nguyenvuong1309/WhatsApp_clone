@@ -33,7 +33,6 @@ export default function Contacts() {
 
 function ContactPreview({contact, image}) {
   const {unfilteredRooms, rooms} = useContext(GlobalContext);
-  console.log("🚀 ~ ContactPreview ~ unfilteredRooms:", unfilteredRooms)
   const [user, setUser] = useState(contact);
   const [error, setError] = useState(null);
 

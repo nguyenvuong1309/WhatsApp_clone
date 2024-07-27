@@ -40,15 +40,10 @@ export default function Chat() {
     theme: {colors},
   } = useContext(GlobalContext);
   const {currentUser} = auth;
-  console.log('🚀 ~ Chat ~ currentUser:', currentUser);
   const route = useRoute();
-  console.log('🚀 ~ Chat ~ route:', route);
   const room = route.params.room;
-  console.log('🚀 ~ Chat ~ room:', room);
   const selectedImage = route.params.image;
-  console.log('🚀 ~ Chat ~ selectedImage:', selectedImage);
   const userB = route.params.user;
-  console.log('🚀 ~ Chat ~ userB:', userB);
 
   const senderUser = currentUser.photoURL
     ? {
@@ -59,12 +54,9 @@ export default function Chat() {
     : {name: currentUser.displayName, _id: currentUser.uid};
 
   const roomId = room ? room.id : randomId;
-  console.log('🚀 ~ Chat ~ roomId:', roomId);
 
   const roomRef = doc(db, 'rooms', roomId);
-  console.log('🚀 ~ Chat ~ roomRef:', roomRef);
   const roomMessagesRef = collection(db, 'rooms', roomId, 'messages');
-  console.log('🚀 ~ Chat ~ roomMessagesRef:', roomMessagesRef);
 
   useEffect(() => {
     (async () => {
@@ -157,12 +149,6 @@ export default function Chat() {
       await sendImage(result.uri);
     }
   }
-
-  console.log('🚀 ~ Chat ~ userB:', userB);
-  console.log('🚀 ~ Chat ~ room:', room);
-  console.log('🚀 ~ Chat ~ currentUser:', currentUser);
-  console.log('🚀 ~ Chat ~ senderUser:', senderUser);
-  console.log('🚀 ~ Chat ~ messages:', messages);
 
   return (
     <>

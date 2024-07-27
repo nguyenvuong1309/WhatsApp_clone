@@ -21,7 +21,6 @@ export default function Chats() {
         id: doc.id,
         userB: doc.data().participants.find(p => p.email !== currentUser.email),
       }));
-      console.log('🚀 ~ parsedChats ~ parsedChats:', parsedChats);
       setUnfilteredRooms(parsedChats);
       setRooms(parsedChats.filter(doc => doc.lastMessage));
     });
