@@ -16,7 +16,7 @@ import {PermissionsAndroid, Platform} from 'react-native';
 
 export default function useContacts() {
   const [contacts, setContacts] = useState<
-    {contactName: string; email: string}[]
+    {contactName: string; email: string; photoURL?: string}[]
   >([]);
 
   useEffect(() => {
@@ -35,9 +35,23 @@ export default function useContacts() {
         }
       } else {
         setContacts([
-          {contactName: 'vuong', email: 'vuong@gmail.com'},
-          {contactName: 'thu', email: 'thu@gmail.com'},
-          {contactName: 'anhthu', email: 'anhthu@gmail.com'},
+          {
+            contactName: 'vuong',
+            email: 'vuong@gmail.com',
+            photoURL:
+              'https://i.pinimg.com/originals/3e/ff/83/3eff83844bff011c36cadb226d72e4d8.jpg',
+          },
+          {
+            contactName: 'thu',
+            email: 'thu@gmail.com',
+            photoURL:
+              'https://i.pinimg.com/originals/1c/90/cc/1c90cc9508d99b9f31cd9d623a5b03e3.jpg',
+          },
+          {
+            contactName: 'anhthu',
+            email: 'anhthu@gmail.com',
+            photoURL: 'https://pbs.twimg.com/media/Do3r1V4VsAAstr2.jpg:large',
+          },
         ]);
       }
     })();
@@ -49,7 +63,7 @@ export default function useContacts() {
         if (data.length > 0) {
           setContacts(
             data
-              .filter(
+              ?.filter(
                 c =>
                   c.givenName &&
                   c.emailAddresses &&

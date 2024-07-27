@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Ionicons} from 'react-native-vector-icons';
 import {auth, db} from '../config/FirebaseConfig';
 import GlobalContext from '../context/Context';
 import {
@@ -183,7 +182,7 @@ export default function Chat() {
         <ImageBackground
           resizeMode="cover"
           source={require('../../assets/chatbg.png')}
-          style={{flex: 1}}>
+          style={{flex: 1, marginBottom: 30}}>
           <GiftedChat
             onSend={onSend}
             messages={messages}
@@ -194,13 +193,16 @@ export default function Chat() {
                 {...props}
                 containerStyle={{
                   position: 'absolute',
-                  right: 50,
+                  right: 60,
                   bottom: 5,
                   zIndex: 9999,
                 }}
                 onPressActionButton={handlePhotoPicker}
                 icon={() => (
-                  <Ionicons name="camera" size={30} color={colors.iconGray} />
+                  <Image
+                    source={require('../../assets/camera.png')}
+                    style={{width: 30, height: 30}}
+                  />
                 )}
               />
             )}
@@ -224,13 +226,16 @@ export default function Chat() {
                         {
                           text: text.trim(),
                           user,
-                          _id: messageIdGenerator(),
+                          _id: messageIdGenerator?.(),
                         },
                         true,
                       );
                     }
                   }}>
-                  <Ionicons name="send" size={20} color={colors.white} />
+                  <Image
+                    source={require('../../assets/send.png')}
+                    style={{width: 25, height: 25}}
+                  />
                 </TouchableOpacity>
               );
             }}

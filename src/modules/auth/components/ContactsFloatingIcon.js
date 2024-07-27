@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
-// import {MaterialCommunityIcons} from 'react-native-vector-icons';
 import GlobalContext from '../../../context/Context';
 import {useNavigation} from '@react-navigation/native';
+import {Image} from 'react-native';
 export default function ContactsFloatingIcon() {
   const {
     theme: {colors},
@@ -31,13 +31,10 @@ export default function ContactsFloatingIcon() {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      {/* <MaterialCommunityIcons
-        name="android-messages"
-        size={30}
-        color="white"
-        style={{transform: [{scaleX: -1}]}}
-      /> */}
-      {/* <MessageRoundedIcon /> */}
+      <Image
+        source={require('../../../../assets/message.png')}
+        style={{width: 30, height: 30}}
+      />
     </TouchableOpacity>
   );
 }
